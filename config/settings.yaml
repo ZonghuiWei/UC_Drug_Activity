@@ -1,0 +1,83 @@
+# Application Configuration
+app:
+  name: "UC_Drug_Activity_Predictor"
+  version: "2.1.0"
+  environment: "production"
+  debug: false
+
+# Model Configuration
+model:
+  base_model: "unimolv2"
+  size: "1.1B"
+  available_sizes: ["84m", "164m", "310m", "570m", "1.1B"]
+  task_type: "classification"
+  data_type: "molecule"
+  target_column: "TARGET"
+  
+# Training Parameters
+training:
+  epochs: 100
+  batch_size: 4
+  learning_rate: 0.001
+  cross_validation:
+    n_folds: 5
+    shuffle: true
+    random_state: 42
+  metrics: ["accuracy", "precision", "recall", "f1", "auc"]
+  early_stopping:
+    enabled: true
+    patience: 10
+    min_delta: 0.001
+
+# Data Configuration
+data:
+  input_file: "data.csv"
+  test_file: "test.csv"
+  smiles_column: "SMILES"
+  target_column: "TARGET"
+  validation_split: 0.2
+  preprocessing:
+    remove_duplicates: true
+    validate_smiles: true
+    normalize_targets: false
+
+# Paths and Directories
+paths:
+  results_dir: "immunosuppressant_results"
+  models_dir: "models"
+  logs_dir: "logs"
+  cache_dir: ".cache"
+  temp_dir: ".tmp"
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_handler:
+    enabled: true
+    max_bytes: 10485760  # 10MB
+    backup_count: 5
+  console_handler:
+    enabled: true
+
+# Performance and Resource Management
+performance:
+  max_memory_usage: "8GB"
+  num_workers: 4
+  use_gpu: true
+  gpu_memory_fraction: 0.8
+  enable_mixed_precision: false
+
+# Security and Validation
+security:
+  validate_inputs: true
+  sanitize_paths: true
+  max_file_size: "100MB"
+  allowed_file_extensions: [".csv", ".xlsx", ".txt"]
+
+# Monitoring and Alerts
+monitoring:
+  enable_metrics_collection: true
+  save_training_history: true
+  checkpoint_frequency: 10
+  progress_callback_interval: 1

@@ -1,0 +1,30 @@
+{
+    "runtime": {
+        "environment_variables": {
+            "PYTHONPATH": "src",
+            "CUDA_VISIBLE_DEVICES": "0",
+            "OMP_NUM_THREADS": "4",
+            "MKL_NUM_THREADS": "4"
+        },
+        "memory_management": {
+            "gc_threshold": [700, 10, 10],
+            "max_memory_per_worker": "2GB"
+        }
+    },
+    "optimization": {
+        "model_compilation": {
+            "enabled": false,
+            "backend": "torch.compile"
+        },
+        "data_loading": {
+            "prefetch_factor": 2,
+            "pin_memory": true,
+            "drop_last": false
+        }
+    },
+    "experimental_features": {
+        "gradient_checkpointing": false,
+        "mixed_precision_training": false,
+        "distributed_training": false
+    }
+}
